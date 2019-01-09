@@ -1,0 +1,32 @@
+{%  extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1>Blog about</h1>
+    {% for post in posts %}
+        <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="{% url 'user-post' post.author.username %}">{{ post.author }}</a>
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                </div>
+                <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+                <div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <small class="text-muted">Add comment:</small>
+                        <small class="text-muted">{{ create_comment|crispy }}</small>
+                        <button class="btn btn-outline-info" type="submit">Add</button>
+                    </form>
+                    {% if post.comment_set.all %}
+                        <small class="text-muted">Komentarze: ({{ post.comment_set.all.count }})</small><br>
+                    {% for comment in post.comment_set.all %}
+                       <small class="text-muted">{{ comment.user.username }}: </small>{{ comment.text|truncatewords:2 }}<br>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
