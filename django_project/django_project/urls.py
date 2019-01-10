@@ -45,4 +45,4 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    # to pozwala na wyświetlenie obrazka w profilu
+    """ to pozwala na wyświetlenie obrazka w profilu """

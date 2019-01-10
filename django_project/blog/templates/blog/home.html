@@ -1,9 +1,9 @@
 {% extends 'blog/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    {% for post in post %}
+    {% for post in posts %}
         <article class="media content-section">
-        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
             <div class="media-body">
                 <div class="article-metadata">
                     <a class="mr-2" href="{% url 'user-post' post.author.username %}">{{ post.author }}</a>
@@ -12,21 +12,22 @@
                 <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
                 <p class="article-content">{{ post.content }}</p>
                 <div>
-                <p>Komentarze:</p>
-                    {% for comment in comment %}
-                    {{ comment }}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type='hidden' name='post_id' value='{{ post.id }}' />
+                        <small class="text-muted">Add comment:</small>
+                        <small class="text-muted">{{ create_comment|crispy }}</small>
+                        <button class="btn btn-outline-info" type="submit">Add</button>
+                    </form>
+                    {% if post.comment_set.all %}
+                        <small class="text-muted">Comments: ({{ post.comment_set.all.count }})</small><br>
+                    {% for comment in post.comment_set.all|slice:":3" %}
+                       <small class="text-muted">{{ comment.user.username }}: </small>{{ comment.text|truncatechars:10 }}<br>
                     {% endfor %}
+                    {% else %}
+                        <small class="text-muted">any comments...</small>
+                    {% endif %}
                 </div>
-{#                <div>#}
-{#                    <form method="POST">#}
-{#                        <small class="text-muted">Add Comment:</small>#}
-{#                            {% csrf_token %}#}
-{#                            <input class="form-group" type="text" maxlength="60">#}
-{#                            {{ post.comment.text|crispy }}#}
-{#                        <input class="btn btn-outline-info" type="submit" value="Add">#}
-{#                    </form>#}
-{#                </div>#}
-
             </div>
         </article>
     {% endfor %}

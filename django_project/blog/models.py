@@ -15,8 +15,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    # jak zapisujemy nowy post piszemy poniższą funkcję aby przeniosła nas do
-    # post-detail do nowo utworzonego postu
+    """jak zapisujemy nowy post piszemy poniższą funkcję aby przeniosła nas do
+    post-detail do nowo utworzonego postu"""
+
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk':self.pk})
 
