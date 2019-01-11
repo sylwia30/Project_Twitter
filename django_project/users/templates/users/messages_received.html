@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h1>Messages</h1>
+        <a class="btn btn-outline-info" href="{% url 'message-new' %}">New message</a>
+        <a class="btn btn-outline-info" href="{% url 'messages-received' %}">Received messages</a>
+        <a class="btn btn-outline-info" href="{% url 'messages-sent' %}">Sent messages</a>
+        <p></p>
+    {% block messages %}
+        {% if msg %}
+            {% for message in  msg %}
+                <article class="media content-section">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <img class="rounded-circle article-img" src="{{ message.send_from.profile.image.url }}">
+                            <a class="mr-2">{{ message.send_from }}</a>
+                            <small class="text-muted">{{ message.date_send|date:"F d, Y" }}</small>
+                        </div>
+                            <div class="article-metadata"><b>{{ message.title }}</b></div>
+                            <p class="article-content">{{ message.message }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p>No messages in the mailbox</p>
+        {% endif %}
+    {% endblock messages %}
+{% endblock content %}
+
+
+

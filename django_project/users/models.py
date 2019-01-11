@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.urls import reverse
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -24,4 +26,17 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+class Messages(models.Model):
+    title = models.CharField(max_length=64)
+    message = models.TextField()
+    date_send = models.DateTimeField(auto_now_add=True)
+    send_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_from")
+    send_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_to")
+    read = models.BooleanField(default=False)
+    block = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'from: {self.send_from} to: {self.send_to} message: {self.message[0:20]}'
+
 

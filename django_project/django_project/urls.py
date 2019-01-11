@@ -40,6 +40,11 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(
              template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('profile/<int:pk>/delete/', user_views.UserDeleteForm.as_view(template_name='users/user_confirm_delete.html'), name='user-delete'),
+    path('messages/received/', user_views.MessagesReceivedListView.as_view(), name = 'messages-received'),
+    path('messages/sent/', user_views.MessagesSentListView.as_view(), name='messages-sent'),
+    path('messages/new/', user_views.MessageNewView.as_view(), name='message-new'),
+
+
 
 ]
 

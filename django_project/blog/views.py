@@ -31,7 +31,7 @@ def home(request):
 class PostListView(LoginRequiredMixin, View):
     def get(self, request):
         posts = Post.objects.all().order_by('-date_posted')
-        create_comment = CreateCommentForm()
+        create_comment = CreateCommentForm().order_fields('-date_comment')
         return render(request, 'blog/home.html', {'posts': posts,
                                                    'create_comment': create_comment})
     def post(self, request):

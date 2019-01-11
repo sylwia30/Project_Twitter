@@ -6,11 +6,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, ListView
 from django.contrib.auth.models import User
+from django.views import View
 
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from .models import Profile
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, MessageNewForm
+from .models import Profile, Messages
 
 
 def register(request):
@@ -59,3 +60,33 @@ class UserDeleteForm(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
+
+class MessagesReceivedListView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        msg = Messages.objects.filter(send_to= request.user).order_by('-date_send')
+        return render(request, 'users/messages_received.html', {'msg':msg})
+
+
+class MessagesSentListView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        msg = Messages.objects.filter(send_from = request.user).order_by('-date_send')
+        return render(request, 'users/messages_sent.html', {'msg':msg})
+
+
+class MessageNewView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        form = MessageNewForm
+        return render(request, 'users/messages_form.html', {'form': form})
+
+    def post(self, request):
+        form = MessageNewForm(request.POST)
+        if form.is_valid():
+            send_to = form.cleaned_data.get('send_to')
+            title = form.cleaned_data.get('title')
+            message = form.cleaned_data.get('message')
+            save_form = Messages.objects.create(title=title, message=message, send_from=request.user, send_to=send_to)
+            messages.success(request, "Your message has already been sent!")
+            return redirect('messages-received')

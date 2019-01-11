@@ -10,4 +10,5 @@ class CreateCommentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
         labels = False
-        ordering = ['date_comment']
+        # ordering = ['date_comment']
+
