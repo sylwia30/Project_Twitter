@@ -29,11 +29,14 @@ def home(request):
 
 
 class PostListView(LoginRequiredMixin, View):
+
     def get(self, request):
         posts = Post.objects.all().order_by('-date_posted')
-        create_comment = CreateCommentForm().order_fields('-date_comment')
+        create_comment = CreateCommentForm()
         return render(request, 'blog/home.html', {'posts': posts,
-                                                   'create_comment': create_comment})
+                                                   'create_comment': create_comment
+                                                  })
+
     def post(self, request):
         created_comment = CreateCommentForm(request.POST)
         posts = Post.objects.all().order_by('-date_posted')
@@ -135,7 +138,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class About(View):
     def get(self, request):
         context = {
-            "context": "Add your own journey here",
+            "context": "Register here and add your own journey here",
             'title': 'About'
         }
         return render(request, 'blog/about.html', context)

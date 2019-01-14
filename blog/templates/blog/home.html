@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load extras %}
 {% load crispy_forms_tags %}
 {% block content %}
     {% for post in posts %}
@@ -21,7 +22,7 @@
                     </form>
                     {% if post.comment_set.all %}
                         <small class="text-muted">Comments: ({{ post.comment_set.all.count }})</small><br>
-                    {% for comment in post.comment_set.all|slice:":3" %}
+                        {% for comment in post|order_and_get_three %}
                        <small class="text-muted">{{ comment.user.username }}: </small>{{ comment.text|truncatechars:10 }}<br>
                     {% endfor %}
                     {% else %}
