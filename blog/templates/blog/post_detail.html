@@ -25,7 +25,7 @@
                 <div>
                     {% if post.comment_set.all %}
                         <small class="text-muted">Comments: ({{ post.comment_set.all.count }})</small><br>
-                    {% for comment in post.comment_set.all|slice:"10" %}
+                    {% for comment in post.comment_set.all %}
                        <small class="text-muted">{{ comment.user.username }}: </small>{{ comment.text }}<br>
                     {% endfor %}
                     {% else %}
