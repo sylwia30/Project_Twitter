@@ -7,7 +7,7 @@ What can you do on this blog:
 - add comments to posts
 - send messages to other users
 
-# Technologies and tools
+## Technologies and tools
 - Python
 - Django
 - HTML
