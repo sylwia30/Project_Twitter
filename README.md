@@ -7,9 +7,10 @@ What can you do on this blog:
 - add comments to posts
 - send messages to other users
 
-The technologies and tools used are: 
-Python, 
-Django, 
-HTML, 
-CSS, 
-Bootstrap
+## Technologies and tools
+- Python
+- Django
+- HTML
+- CSS
+- Bootstrap
+
