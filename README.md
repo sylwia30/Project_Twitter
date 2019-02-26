@@ -14,3 +14,5 @@ What can you do on this blog:
 - CSS
 - Bootstrap
 
+## Screenshots
+![Algorithm schema](./screenshots_twitter.jpg)
