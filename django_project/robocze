@@ -1,0 +1,24 @@
+- tworzenie superużytkownika:
+from django.contrib.auth.models import User
+User.objects.create_superuser(username="admin", password="admin", email="sylwusia30@gmail.com", is_staff=True)
+
+-tworzenie użytkownika:
+user1 = User.objects.create_user(username="user1", password="user1user1", email="jankowalski@op.pl")
+user2 = User.objects.create_user(username="user2", password="testing321")
+-tworzenie postów:
+from django.contrib.auth.models import User
+syl = User.objects.get(pk=1)
+post1 = Post.objects.create(author=syl, title="Blog Post 1", content="First post content")
+luk = User.objects.get(pk=2)
+post2= Post.objects.create(author=luk, title="Blog Post 2", content="Second post content")
+post1= Post.objects.create(author=luk, title="Blog Post 1", content="First post content")
+post3= Post.objects.create(author=luk, title="Blog Post 3", content="Thirs post content")
+
+
+-różne rodzaje messages:
+
+messages.debug
+messages.info
+messages.success
+messages.warning
+messages.error

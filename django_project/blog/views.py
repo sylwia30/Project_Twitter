@@ -138,7 +138,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class About(View):
     def get(self, request):
         context = {
-            "context": "Register here and add your own journey here",
             'title': 'About'
         }
         return render(request, 'blog/about.html', context)
