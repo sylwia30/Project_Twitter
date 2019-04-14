@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = '#uquj%y@9o*ytp*6#d74mbu2ar%t&oc1rox5)37zii358#e$yw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com']
 
 
 # Application definition
@@ -156,3 +157,11 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'blog/static'),]
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__)) # zmienna szukająca settings.py
+
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'blog/static')
+
+django_heroku.settings(locals())
