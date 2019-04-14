@@ -1,5 +1,6 @@
 # Project_Twitter
 A social service that provides a microblogging service. 
+
 What can you do on this blog:
 - create a profile
 - login and logout
